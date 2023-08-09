@@ -12,7 +12,7 @@
             this.VecAnimales = new Animal[2];
         }
 
-        public Zoologico(int inNit,string nom,string est) {
+        public Zoologico(int inNit, string nom, string est) {
             this.nit = inNit;
             this.nombre = nom;
             this.estado = est;

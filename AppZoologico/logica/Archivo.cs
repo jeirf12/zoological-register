@@ -37,25 +37,23 @@ namespace AppZoologico.logica {
         public int contarLineas(string nombre) {
             this.abrirArchivo(nombre, false);
             int lineas = 0;
-            while (puedeLeer() != -1) {
-                leerArchivo();
+            while (this.puedeLeer() != -1) {
+                this.leerArchivo();
                 ++lineas;
             }
-            cerrarArchivo();
+            this.cerrarArchivo();
             return lineas;
-
         }
         
         //método adicional
         public string[] leerPalabras(string nombre, int cantidad) {
             string[] palabras = new string[cantidad];
             int i = 0;
-            abrirArchivo(nombre, false);
-            while (puedeLeer() != -1 && i < cantidad) {
-                palabras[i] = leerArchivo();
-                ++i;
+            this.abrirArchivo(nombre, false);
+            while (this.puedeLeer() != -1 && i < cantidad) {
+                palabras[++i] = this.leerArchivo();
             }
-            reader.Close();
+            this.cerrarArchivo();
             return palabras;
         }
     }
