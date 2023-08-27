@@ -31,32 +31,32 @@ namespace AppZoologico {
             if (this.tamanioZoologico > 0 && this.tamanioAnimal > 0) {
                 if (this.tamanioZoologico == 1 && this.tamanioAnimal <= 2) {
                     if (this.tamanioAnimal == 1) {
-                        this.zoologicos[0].VecAnimales[0] = this.animales[0];
+                        this.zoologicos[0].animales[0] = this.animales[0];
                         this.inhabilitarControlesZoologico();
                         this.tabControl1.SelectedIndex = 1;
                         j = 1;
                     } else {
-                        this.zoologicos[0].VecAnimales[1] = this.animales[1];
+                        this.zoologicos[0].animales[1] = this.animales[1];
                         this.inhabilitarControlesAnimal();
                         i = 1;
                         j = 0;
                     }
                 } else if (this.tamanioZoologico == 2 && this.tamanioAnimal <= 4) {
                     if (this.tamanioAnimal == 2) {
-                        this.zoologicos[0].VecAnimales[0] = this.animales[0];
-                        this.zoologicos[0].VecAnimales[1] = this.animales[1];
+                        this.zoologicos[0].animales[0] = this.animales[0];
+                        this.zoologicos[0].animales[1] = this.animales[1];
                         this.inhabilitarControlesZoologico();
                         this.tabControl1.SelectedIndex = 1;
                         i = 2;
                         j = 0;
                     } else if (this.tamanioAnimal == 3) {
-                        this.zoologicos[1].VecAnimales[0] = this.animales[2];
+                        this.zoologicos[1].animales[0] = this.animales[2];
                         this.inhabilitarControlesZoologico();
                         this.tabControl1.SelectedIndex = 1;
                         i = 2;
                         j = 1;
                     } else if (this.tamanioAnimal == 4) {
-                        this.zoologicos[1].VecAnimales[1] = this.animales[3];
+                        this.zoologicos[1].animales[1] = this.animales[3];
                         this.inhabilitarControlesZoologico();
                         this.inhabilitarControlesAnimal();
                     }
@@ -93,7 +93,7 @@ namespace AppZoologico {
                 cod = int.Parse(txtCodBusAnim.Text);
                 Array.ForEach(this.zoologicos, zoo => {
                     if(zoo != null && Utilidad.compararIgualdad(nit, zoo.nit)) {
-                        Array.ForEach(zoo.VecAnimales, ani => {
+                        Array.ForEach(zoo.animales, ani => {
                             if(ani != null && Utilidad.compararIgualdad(cod, ani.codigo)) anim += ani.ToString() + "\n"; 
                         });
                     }
@@ -115,7 +115,7 @@ namespace AppZoologico {
                 bool isDeleted = false;
                 Array.ForEach(this.zoologicos, zoo => {
                     if(zoo != null && Utilidad.compararIgualdad(nit, zoo.nit)) {
-                        Array.ForEach(zoo.VecAnimales, ani => {
+                        Array.ForEach(zoo.animales, ani => {
                             if (ani != null && cod != ani.codigo) {
                                 vecAuxAnim[cont] = ani;
                                 cont++;
@@ -124,7 +124,7 @@ namespace AppZoologico {
                                 isDeleted = true;
                             }
                         });
-                        zoo.VecAnimales = vecAuxAnim;
+                        zoo.animales = vecAuxAnim;
                     }
                 });
                 if(isDeleted) Utilidad.mensajeExito(mensaje);
@@ -149,7 +149,7 @@ namespace AppZoologico {
                     Utilidad.mensajeExito("Informacion del animal Registrada");
                     j++;
                     if (j == 2 && i < 2) {
-                        zoologicos[i].VecAnimales = animales;
+                        zoologicos[i].animales = animales;
                         i++;
                         if(j == 2 && i == 2) {
                             Utilidad.mensajeAdvertencia("Llego al numero maximo de registros de animales y Zoologicos");
