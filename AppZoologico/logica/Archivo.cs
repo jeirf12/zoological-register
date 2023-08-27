@@ -8,52 +8,55 @@ namespace AppZoologico.logica {
 
         public void abrirArchivo(string nombre, bool escritura) {
             if (escritura == true) {
-                writer = new StreamWriter(nombre, true);
+                writer = obtenerFlujoEscritura(nombre);
             } else {
-                stream = new FileStream(nombre, FileMode.Open, FileAccess.Read);
-                reader = new StreamReader(stream);
+                stream = existeArchivo(nombre)
+                    ? leerFlujoArchivo(nombre)
+                    : crearArchivo(nombre);
+                reader = obtenerFlujoLectura(stream);
             }
         }
 
-        public void escribirArchivo(string datos) {
-            writer.WriteLine(datos);
-        }
+        private StreamWriter obtenerFlujoEscritura(string nombre) => new StreamWriter(nombre, true);
+
+        private bool existeArchivo(string nombre) => File.Exists(nombre);
+
+        private FileStream leerFlujoArchivo(string nombre) => new FileStream(nombre, FileMode.Open, FileAccess.Read);
+
+        private FileStream crearArchivo(string nombre) => File.Create(nombre);
+
+        private StreamReader obtenerFlujoLectura(FileStream stream) => new StreamReader(stream);
+
+        public void escribirArchivo(string datos) => writer.WriteLine(datos);
         
-        public string leerArchivo() {
-            return reader.ReadLine();
-        }
+        public string leerArchivo() => reader.ReadLine();
         
         public void cerrarArchivo() {
             if (writer != null) writer.Close();
             if (reader != null) reader.Close();
         }
 
-        //método
-        public int puedeLeer() {
-            return reader.Peek(); //verifica si hay un caracter siguiente en la lectura de linea
-        }
+        public int puedeLeer() => reader.Peek();
         
-        //método para contar las lineas que tiene el archivo
         public int contarLineas(string nombre) {
-            this.abrirArchivo(nombre, false);
+            abrirArchivo(nombre, false);
             int lineas = 0;
-            while (this.puedeLeer() != -1) {
-                this.leerArchivo();
+            while (puedeLeer() != -1) {
+                leerArchivo();
                 ++lineas;
             }
-            this.cerrarArchivo();
+            cerrarArchivo();
             return lineas;
         }
         
-        //método adicional
         public string[] leerPalabras(string nombre, int cantidad) {
             string[] palabras = new string[cantidad];
             int i = 0;
-            this.abrirArchivo(nombre, false);
-            while (this.puedeLeer() != -1 && i < cantidad) {
-                palabras[++i] = this.leerArchivo();
+            abrirArchivo(nombre, false);
+            while (puedeLeer() != -1 && i < cantidad) {
+                palabras[++i] = leerArchivo();
             }
-            this.cerrarArchivo();
+            cerrarArchivo();
             return palabras;
         }
     }

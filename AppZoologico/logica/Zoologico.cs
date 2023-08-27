@@ -19,8 +19,6 @@
             this.animales = new Animal[2];
         }
         
-        public override string ToString() {
-            return "Nit: " + nit + "\nNombre: " + nombre + "\nEstado: " + estado;
-        }
+        public override string ToString() => "Nit: " + nit + "\nNombre: " + nombre + "\nEstado: " + estado;
     }
 }

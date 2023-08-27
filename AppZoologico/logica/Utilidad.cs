@@ -25,11 +25,9 @@ namespace AppZoologico.logica {
             objArchivo.cerrarArchivo();
         }
 
-        public static Object crearClase(string[] dates) {
-            return dates.Length == 4
+        public static Object crearClase(string[] dates) => dates.Length == 4
                 ? (Object)new Animal(int.Parse(dates[0]), dates[1], dates[2], double.Parse(dates[3]))
                 : (Object)new Zoologico(int.Parse(dates[0]), dates[1], dates[2]);
-        }
 
         public static int contarValoresNulos<T>(T[] arrayGeneric) {
             int size = 0;
@@ -39,18 +37,12 @@ namespace AppZoologico.logica {
             return size;
         }
 
-        public static Func<int, int, bool> compararIgualdad = (a, b) => a == b;
+        public static bool compararIgualdad(int a, int b) => a == b;
 
-        public static void mensajeExito(String message) {
-            MessageBox.Show(message, "Mensaje de exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+        public static void mensajeExito(String message) => MessageBox.Show(message, "Mensaje de exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        public static void mensajeError(string message) {
-            MessageBox.Show(message, "Mensaje de error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        public static void mensajeError(string message) => MessageBox.Show(message, "Mensaje de error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-        public static void mensajeAdvertencia(String message) {
-            MessageBox.Show(message, "Mensaje de advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
+        public static void mensajeAdvertencia(String message) => MessageBox.Show(message, "Mensaje de advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 }
