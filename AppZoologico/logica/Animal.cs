@@ -19,6 +19,6 @@
             this.peso = inPeso;
         }
         
-        public override string ToString() => "Codigo: " + codigo + "\nNombre: " + nombre + "\nContinente de Origen: " + continenteOrigen + "\nPeso: " + peso;
+        public override string ToString() => "Codigo: " + codigo + "\nNombre: " + nombre + "\nContinente de Origen: " + continenteOrigen + "\nPeso: " + peso + " kg\n";
     }
 }

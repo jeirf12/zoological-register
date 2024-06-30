@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace AppZoologico.logica {
     class Archivo {
@@ -6,18 +7,18 @@ namespace AppZoologico.logica {
         private StreamReader reader;
         private FileStream stream;
 
-        public void abrirArchivo(string nombre, bool escritura) {
+        private void abrirArchivo(string nombre, bool escritura, bool esReemplazable) {
             if (escritura == true) {
-                writer = obtenerFlujoEscritura(nombre);
+                this.writer = this.obtenerFlujoEscritura(nombre, esReemplazable);
             } else {
-                stream = existeArchivo(nombre)
-                    ? leerFlujoArchivo(nombre)
-                    : crearArchivo(nombre);
-                reader = obtenerFlujoLectura(stream);
+                this.stream = this.existeArchivo(nombre)
+                    ? this.leerFlujoArchivo(nombre)
+                    : this.crearArchivo(nombre);
+                this.reader = this.obtenerFlujoLectura(this.stream);
             }
         }
 
-        private StreamWriter obtenerFlujoEscritura(string nombre) => new StreamWriter(nombre, true);
+        private StreamWriter obtenerFlujoEscritura(string nombre, bool esReemplazable) => new StreamWriter(nombre, !esReemplazable);
 
         private bool existeArchivo(string nombre) => File.Exists(nombre);
 
@@ -25,39 +26,53 @@ namespace AppZoologico.logica {
 
         private FileStream crearArchivo(string nombre) => File.Create(nombre);
 
+        public void eliminarArchivo(string nombre) => File.Delete(nombre);
+
         private StreamReader obtenerFlujoLectura(FileStream stream) => new StreamReader(stream);
 
-        public void escribirArchivo(string datos) => writer.WriteLine(datos);
+        private void escribirArchivo(string datos) => this.writer.WriteLine(datos);
         
-        public string leerArchivo() => reader.ReadLine();
+        private string leerArchivo() => this.reader.ReadLine();
         
-        public void cerrarArchivo() {
-            if (writer != null) writer.Close();
-            if (reader != null) reader.Close();
+        private void cerrarArchivo() {
+            if (this.writer != null) this.writer.Close();
+            if (this.reader != null) this.reader.Close();
         }
 
-        public int puedeLeer() => reader.Peek();
-        
-        public int contarLineas(string nombre) {
-            abrirArchivo(nombre, false);
-            int lineas = 0;
-            while (puedeLeer() != -1) {
-                leerArchivo();
-                ++lineas;
-            }
-            cerrarArchivo();
-            return lineas;
-        }
-        
-        public string[] leerPalabras(string nombre, int cantidad) {
-            string[] palabras = new string[cantidad];
+        private int puedeLeer() => this.reader.Peek();
+
+        public void llenarMatrizInformacion<T>(string nombre, T[] matrizIngresada) {
             int i = 0;
-            abrirArchivo(nombre, false);
-            while (puedeLeer() != -1 && i < cantidad) {
-                palabras[++i] = leerArchivo();
-            }
-            cerrarArchivo();
-            return palabras;
+            try {
+                this.abrirArchivo(nombre, false, false);
+                while (this.puedeLeer() != -1 && i < matrizIngresada.Length) {
+                    string[] palabras = this.leerArchivo().Split(',');
+                    matrizIngresada[i++] = (T)Utilidad.crearClase(palabras);
+                }
+                this.cerrarArchivo();
+            } catch (IOException ex) { Console.WriteLine(ex); }
+            catch (Exception ex) { Console.WriteLine(ex); }
+        }
+
+        public void llenarMatrizInformacion<T>(string nombre, T[] matrizIngresada, int cantidadLineas) {
+            int i = 0;
+            try {
+                this.abrirArchivo(nombre, false, false);
+                while (this.puedeLeer() != -1 && i < cantidadLineas) {
+                    string[] palabras = this.leerArchivo().Split(',');
+                    matrizIngresada[i++] = (T)Utilidad.crearClase(palabras);
+                }
+                this.cerrarArchivo();
+            } catch (IOException ex) { Console.WriteLine(ex); }
+            catch (Exception ex) { Console.WriteLine(ex); }
+        }
+
+        public void escribirInformacion(string nombre, string informacion, bool esReemplazable = false) {
+            try {
+                this.abrirArchivo(nombre, true, esReemplazable);
+                this.escribirArchivo(informacion);
+                this.cerrarArchivo();
+            } catch (IOException ex) { Console.WriteLine(ex); }
         }
     }
 }
