@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppZoologico", "AppZoologico\AppZoologico.csproj", "{8E214B74-EFA3-4238-86C2-23BD64092799}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppZoologico.Tests", "AppZoologico.Tests\AppZoologico.Tests.csproj", "{6F29B7C1-39D4-47FB-AB62-9213F3890F55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{8E214B74-EFA3-4238-86C2-23BD64092799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E214B74-EFA3-4238-86C2-23BD64092799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E214B74-EFA3-4238-86C2-23BD64092799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F29B7C1-39D4-47FB-AB62-9213F3890F55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F29B7C1-39D4-47FB-AB62-9213F3890F55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F29B7C1-39D4-47FB-AB62-9213F3890F55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F29B7C1-39D4-47FB-AB62-9213F3890F55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D54CD214-A5A7-4399-9FFA-F618F2CCC331}
 	EndGlobalSection
 EndGlobal

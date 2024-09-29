@@ -1,3 +1,6 @@
 .vs/
 AppZoologico/bin/
 AppZoologico/obj/
+AppZoologico.Tests/bin/
+AppZoologico.Tests/obj/
+packages/

@@ -1,6 +1,6 @@
 ﻿namespace AppZoologico
 {
-    partial class appZoologico
+    partial class AppZoologico
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(appZoologico));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppZoologico));
             this.tbpBorrarAnimal = new System.Windows.Forms.TabPage();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.txtCodElimAnim = new System.Windows.Forms.TextBox();
@@ -108,7 +108,7 @@
             this.btnEliminar.TabIndex = 4;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            this.btnEliminar.Click += new System.EventHandler(this.BtnEliminar_Click);
             // 
             // txtCodElimAnim
             // 
@@ -168,7 +168,7 @@
             this.btnBuscarAnimal.TabIndex = 5;
             this.btnBuscarAnimal.Text = "Buscar";
             this.btnBuscarAnimal.UseVisualStyleBackColor = true;
-            this.btnBuscarAnimal.Click += new System.EventHandler(this.btnBuscarAnimal_Click);
+            this.btnBuscarAnimal.Click += new System.EventHandler(this.BtnBuscarAnimal_Click);
             // 
             // rtxtInfoAnim
             // 
@@ -234,7 +234,7 @@
             this.btnBuscarZoologico.TabIndex = 3;
             this.btnBuscarZoologico.Text = "Buscar";
             this.btnBuscarZoologico.UseVisualStyleBackColor = true;
-            this.btnBuscarZoologico.Click += new System.EventHandler(this.btnBuscarZoologico_Click);
+            this.btnBuscarZoologico.Click += new System.EventHandler(this.BtnBuscarZoologico_Click);
             // 
             // txtNitBuscar
             // 
@@ -312,7 +312,7 @@
             this.btnGuardarInformacion.TabIndex = 26;
             this.btnGuardarInformacion.Text = "Guardar Informacion Zoologico";
             this.btnGuardarInformacion.UseVisualStyleBackColor = true;
-            this.btnGuardarInformacion.Click += new System.EventHandler(this.btnGuardarInformacion_Click);
+            this.btnGuardarInformacion.Click += new System.EventHandler(this.BtnGuardarInformacion_Click);
             // 
             // rbCerrado
             // 
@@ -434,7 +434,7 @@
             this.btnGuardarInformacionAnimal.TabIndex = 27;
             this.btnGuardarInformacionAnimal.Text = "Guardar Informacion Animal";
             this.btnGuardarInformacionAnimal.UseVisualStyleBackColor = true;
-            this.btnGuardarInformacionAnimal.Click += new System.EventHandler(this.btnGuardarInformacionAnimal_Click);
+            this.btnGuardarInformacionAnimal.Click += new System.EventHandler(this.BtnGuardarInformacionAnimal_Click);
             // 
             // txtPesoAnim
             // 
