@@ -25,10 +25,10 @@
 
         public AppZoologico() {
             this.InitializeComponent();
-            this.inicializacionInformacion();
+            this.InicializacionInformacion();
         }
 
-        private void inicializacionInformacion() {
+        private void InicializacionInformacion() {
             this.Zoologicos = new Zoologico[TOPE_ZOOLOGICOS];
             this.Animales = new Animal[TOPE_ANIMALES];
             this.ObjArchivo.LlenarMatrizInformacion(RUTA_ARCHIVO_ZOOLOGICO, ref this.Zoologicos);
@@ -51,7 +51,7 @@
                         ? this.TamanioAnimal 
                         : this.TamanioAnimal - 1;
             for (int k = 0; k < TOPE_ANIMALES; k++) {
-                if (this.Animales[k] != null)
+                if (!(this.Animales[k] is null))
                     this.Zoologicos[k > 1 ? 1 : 0].Animales[k > 1 ? k - 2 : k] = this.Animales[k];
             }
         }
@@ -108,147 +108,164 @@
 
         private void BtnBuscarZoologico_Click(object sender, EventArgs e) {
             try {
-                if (string.IsNullOrEmpty(txtNitBuscar.Text)) 
-                    throw new Exception("El nit no debe estar vacío");
-                if (!txtNitBuscar.Text.EsNumerico()) 
-                    throw new Exception("El nit del zoológico no tiene el formato adecuado");
+                string.IsNullOrEmpty(txtNitBuscar.Text)
+                    .EsExcepcion("El nit no debe estar vacío");
+
+                (!txtNitBuscar.Text.EsNumerico())
+                    .EsExcepcion("El nit del zoológico no tiene el formato adecuado");
+
                 int nit = int.Parse(txtNitBuscar.Text);
                 
                 Zoologico zoologicoEncontrado = this.Zoologicos
-                    .Where(zoologico => zoologico != null && Utilidad.CompararIgualdad(nit, zoologico.Nit))
+                    .Where(zoologico => !(zoologico is null) && nit.CompararIgualdad(zoologico.Nit))
                     .FirstOrDefault();
 
-                if (zoologicoEncontrado == null) {
+                if (zoologicoEncontrado is null) {
                     rtxtInfoZool.Text = "El nit del zoológico no existe en la base de datos";
                     return;
                 }
 
                 rtxtInfoZool.Text = zoologicoEncontrado.ToString();
                 this.LimpiarCajaTexto();
-            } catch (Exception ex) { Utilidad.MensajeError(ex.Message); }
+            } catch (Exception ex) { ex.Message.MensajeError(); }
         }
 
         private void BtnBuscarAnimal_Click(object sender, EventArgs e) {
             try {
-                if (string.IsNullOrEmpty(txtZooBusAnim.Text)) 
-                    throw new Exception("El nit del zoológico no debe estar vacío");
-                if (string.IsNullOrEmpty(txtCodBusAnim.Text)) 
-                    throw new Exception("El código del animal no debe estar vacío");
-                if (!txtZooBusAnim.Text.EsNumerico()) 
-                    throw new Exception("El  nit del zoológico no tiene el formato adecuado");
-                if (!txtCodBusAnim.Text.EsNumerico()) 
-                    throw new Exception("El código del animal no tiene el formato adecuado");
+                string.IsNullOrEmpty(txtZooBusAnim.Text)
+                    .EsExcepcion("El nit del zoológico no debe estar vacío");
+
+                string.IsNullOrEmpty(txtCodBusAnim.Text)
+                    .EsExcepcion("El código del animal no debe estar vacío");
+
+                (!txtZooBusAnim.Text.EsNumerico())
+                    .EsExcepcion("El  nit del zoológico no tiene el formato adecuado");
+
+                (!txtCodBusAnim.Text.EsNumerico())
+                    .EsExcepcion("El código del animal no tiene el formato adecuado");
                 
                 int nit = int.Parse(txtZooBusAnim.Text);
                 int cod = int.Parse(txtCodBusAnim.Text);
 
                 Zoologico zoologicoEncontrado = this.Zoologicos
-                    .Where(zoologico => zoologico != null && Utilidad.CompararIgualdad(nit, zoologico.Nit))
+                    .Where(zoologico => !(zoologico is null) && nit.CompararIgualdad(zoologico.Nit))
                     .FirstOrDefault();
 
-                if (zoologicoEncontrado == null) {
+                if (zoologicoEncontrado is null) {
                     rtxtInfoAnim.Text = "El nit del zoológico no existe en la base de datos";
                     return;
                 }
 
                 Animal animalEncontrado = zoologicoEncontrado.Animales
-                    .Where(animal => animal != null && Utilidad.CompararIgualdad(cod, animal.Codigo))
+                    .Where(animal => !(animal is null) && cod.CompararIgualdad(animal.Codigo))
                     .FirstOrDefault();
 
-                if (animalEncontrado == null) {
+                if (animalEncontrado is null) {
                     rtxtInfoAnim.Text = "El código del animal no existe en la base de datos";
                     return;
                 }
 
                 rtxtInfoAnim.Text = animalEncontrado.ToString();
                 this.LimpiarCajaTexto();
-            } catch (Exception ex) { Utilidad.MensajeError(ex.Message); }
+            } catch (Exception ex) { ex.Message.MensajeError(); }
         }
 
         private void BtnEliminar_Click(object sender, EventArgs e) {
             try {
-                if (string.IsNullOrEmpty(txtNitZooElimAnim.Text)) 
-                    throw new Exception("El nit del zoológico no debe estar vacío");
-                if (string.IsNullOrEmpty(txtCodElimAnim.Text)) 
-                    throw new Exception("El código del animal no debe estar vacío");
-                if (!txtNitZooElimAnim.Text.EsNumerico()) 
-                    throw new Exception("El  nit del zoológico no tiene el formato adecuado");
-                if (!txtCodElimAnim.Text.EsNumerico()) 
-                    throw new Exception("El código del animal no tiene el formato adecuado");
+                string.IsNullOrEmpty(txtNitZooElimAnim.Text)
+                    .EsExcepcion("El nit del zoológico no debe estar vacío");
+
+                string.IsNullOrEmpty(txtCodElimAnim.Text)
+                    .EsExcepcion("El código del animal no debe estar vacío");
+
+                (!txtNitZooElimAnim.Text.EsNumerico())
+                    .EsExcepcion("El  nit del zoológico no tiene el formato adecuado");
+
+                (!txtCodElimAnim.Text.EsNumerico())
+                    .EsExcepcion("El código del animal no tiene el formato adecuado");
+
                 int nit = int.Parse(txtNitZooElimAnim.Text);
                 int cod = int.Parse(txtCodElimAnim.Text);
 
                 Zoologico zoologicoEncontrado = this.Zoologicos
-                    .Where(zoologico => zoologico != null && Utilidad.CompararIgualdad(nit, zoologico.Nit))
+                    .Where(zoologico => !(zoologico is null) && nit.CompararIgualdad(zoologico.Nit))
                     .FirstOrDefault();
 
-                if (zoologicoEncontrado == null) {
-                    Utilidad.MensajeError("El nit del zoológico no existe en la base de datos");
+                if (zoologicoEncontrado is null) {
+                    "El nit del zoológico no existe en la base de datos".MensajeError();
                     return;
                 }
 
                 Animal animalABorrar = zoologicoEncontrado.Animales
-                    .Where(animal => animal != null && Utilidad.CompararIgualdad(cod, animal.Codigo))
+                    .Where(animal => !(animal is null) && cod.CompararIgualdad(animal.Codigo))
                     .FirstOrDefault();
 
-                if (animalABorrar == null) {
-                    Utilidad.MensajeError("El código del animal no existe en la base de datos");
+                if (animalABorrar is null) {
+                    "El código del animal no existe en la base de datos".MensajeError();
                     return;
                 }
 
                 var indice = 0;
                 foreach (var animal in this.Animales) {
-                    if (animal != null && !Utilidad.CompararIgualdad(animalABorrar.Codigo, animal.Codigo)) {
+                    if (!(animal is null) && !animal.Codigo.CompararIgualdad(animalABorrar.Codigo)) {
                         this.ObjArchivo.EscribirInformacion(RUTA_ARCHIVO_ANIMAL, animal.CrearInformacionAnimal(), indice.EsIgualACero());
                         indice++;
                     }
                 }
 
-                this.inicializacionInformacion();
-                Utilidad.MensajeExito("El animal se ha borrado satisfactoriamente");
+                this.InicializacionInformacion();
+                "El animal se ha borrado satisfactoriamente".MensajeExito();
                 this.LimpiarCajaTexto();
-            } catch (Exception ex) { Utilidad.MensajeError(ex.Message); }
+            } catch (Exception ex) { ex.Message.MensajeError(); }
         }
 
         private void BtnGuardarInformacionAnimal_Click(object sender, EventArgs e) {
             try {
                 if (this.TamanioAnimal < TOPE_ANIMALES_POR_ZOOLOGICO) {
-                    if (string.IsNullOrEmpty(txtCodAnim.Text)) 
-                        throw new Exception("El código del animal no puede ingresarse vacío");
-                    if (!txtCodAnim.Text.EsNumerico()) 
-                        throw new Exception("El código del animal no tiene el formato adecuado");
-                    if (string.IsNullOrEmpty(txtNomAnim.Text)) 
-                        throw new Exception("El nombre del animal no puede ingresarse vacío");
-                    if (string.IsNullOrEmpty(cbxContOrig.Text)) 
-                        throw new Exception("El continente de origén del animal no puede ingresarse vacío");
-                    if (string.IsNullOrEmpty(txtPesoAnim.Text)) 
-                        throw new Exception("El peso del animal no puede ingresarse vacío");
+                    string.IsNullOrEmpty(txtCodAnim.Text)
+                        .EsExcepcion("El código del animal no puede ingresarse vacío");
+
+                    (!txtCodAnim.Text.EsNumerico())
+                        .EsExcepcion("El código del animal no tiene el formato adecuado");
+
+                    string.IsNullOrEmpty(txtNomAnim.Text)
+                        .EsExcepcion("El nombre del animal no puede ingresarse vacío");
+
+                    string.IsNullOrEmpty(cbxContOrig.Text)
+                        .EsExcepcion("El continente de origén del animal no puede ingresarse vacío");
+                    
+                    string.IsNullOrEmpty(txtPesoAnim.Text)
+                        .EsExcepcion("El peso del animal no puede ingresarse vacío");
+                    
                     int cod = int.Parse(txtCodAnim.Text);
-                    if (!Utilidad.VerificarUnicidad(this.Zoologicos[this.TamanioZoologico].Animales, cod)) 
-                        throw new Exception("El código del animal debe ser único, vuelvalo a ingresar");
+
+                    (!this.Zoologicos[this.TamanioZoologico].Animales
+                        .VerificarUnicidad(cod))
+                        .EsExcepcion("El código del animal debe ser único, vuelvalo a ingresar");
+
                     string nomAnim = txtNomAnim.Text;
                     string continent = cbxContOrig.SelectedItem.ToString();
                     double peso = double.Parse(txtPesoAnim.Text);
                     Animal animal = new Animal(cod, nomAnim, continent, peso);
                     for(int i = 0; i < TOPE_ANIMALES; i++) {
-                        if (this.Animales[i] == null) {
+                        if (this.Animales[i] is null) {
                             this.Animales[i] = animal;
                             break;
                         }
                     }
                     this.ObjArchivo.EscribirInformacion(RUTA_ARCHIVO_ANIMAL, animal.CrearInformacionAnimal());
-                    Utilidad.MensajeExito("Información del animal Registrada");
+                    "Información del animal Registrada".MensajeExito();
                     this.TamanioAnimal++;
                 }
                 if (this.TamanioAnimal <= TOPE_ANIMALES_POR_ZOOLOGICO && this.TamanioZoologico <= TOPE_ZOOLOGICOS) {
                     for (int k = 0; k < TOPE_ANIMALES; k++) {
-                        if (this.Animales[k] != null)
+                        if (!(this.Animales[k] is null))
                             this.Zoologicos[k > 1 ? 1 : 0].Animales[k > 1 ? k - 2 : k] = this.Animales[k];
                     }
                     var cantidadAnimales = this.Animales.ObtenerTamanioSinContarValoresNulos();
 
                     if (this.TamanioAnimal == TOPE_ANIMALES_POR_ZOOLOGICO - 1 && this.TamanioZoologico == TOPE_ZOOLOGICOS - 1 && cantidadAnimales == TOPE_ANIMALES) {
-                        Utilidad.MensajeAdvertencia("Llegó al número máximo de registros de animales y Zoologicos");
+                        "Llegó al número máximo de registros de animales y Zoologicos".MensajeAdvertencia();
                         this.InhabilitarControlesZoologico();
                         this.InhabilitarControlesAnimal();
                     } else if (this.TamanioAnimal == TOPE_ANIMALES_POR_ZOOLOGICO - 1 && this.TamanioZoologico == TOPE_ZOOLOGICOS - 2) {
@@ -261,13 +278,13 @@
                     }
                 }
                 this.LimpiarCajaTexto();
-            } catch (Exception ex) { Utilidad.MensajeError(ex.Message); }
+            } catch (Exception ex) { ex.Message.MensajeError(); }
         }
 
         private void BtnGuardarInformacion_Click(object sender, EventArgs e) {
             try {
                 if (this.TamanioZoologico == TOPE_ZOOLOGICOS - 1) {
-                    Utilidad.MensajeAdvertencia("Llegó al número máximo de registros de Zoologicos");
+                    "Llegó al número máximo de registros de Zoologicos".MensajeAdvertencia();
                     this.InhabilitarControlesZoologico();
                     this.HabilitarControlesAnimal();
                     tabControl1.SelectedIndex = 1;
@@ -275,15 +292,20 @@
                     return;
                 }
 
-                if (string.IsNullOrEmpty(txtNitZool.Text))
-                    throw new Exception("El nit del zoológico ingresado no debe ser vacío");
-                if (string.IsNullOrEmpty(txtNomZool.Text))
-                    throw new Exception("El nombre del zoológico ingresado no debe ser vacío");
-                if (!rbAbierto.Checked && !rbCerrado.Checked)
-                    throw new Exception("El estado del zoológico ingresado debe ser seleccionado");
+                string.IsNullOrEmpty(txtNitZool.Text)
+                    .EsExcepcion("El nit del zoológico ingresado no debe ser vacío");
+                
+                string.IsNullOrEmpty(txtNomZool.Text)
+                    .EsExcepcion("El nombre del zoológico ingresado no debe ser vacío");
+
+                (!rbAbierto.Checked && !rbCerrado.Checked)
+                    .EsExcepcion("El estado del zoológico ingresado debe ser seleccionado");
+
                 int nit = int.Parse(txtNitZool.Text);
-                if (!Utilidad.VerificarUnicidad(Zoologicos, nit))
-                    throw new Exception("El nit del zoológico debe ser único, vuelvalo a ingresar");
+                
+                (!Zoologicos.VerificarUnicidad(nit))
+                    .EsExcepcion("El nit del zoológico debe ser único, vuelvalo a ingresar");
+
                 string nombreZoologico = txtNomZool.Text;
                 string estado = rbAbierto.Checked && !rbCerrado.Checked
                     ? "Abierto"
@@ -291,12 +313,12 @@
                 Zoologico zoologico = new Zoologico(nit, nombreZoologico, estado);
                 this.Zoologicos[this.TamanioZoologico++] = zoologico;
                 this.ObjArchivo.EscribirInformacion(RUTA_ARCHIVO_ZOOLOGICO, zoologico.CrearInformacionZoologico());
-                Utilidad.MensajeExito("Información del zoológico Registrada correctamente!");
+                "Información del zoológico Registrada correctamente!".MensajeExito();
                 this.InhabilitarControlesZoologico();
                 this.HabilitarControlesAnimal();
                 tabControl1.SelectedIndex = 1;
                 this.LimpiarCajaTexto();
-            } catch (Exception ex) { Utilidad.MensajeError(ex.Message); }
+            } catch (Exception ex) { ex.Message.MensajeError(); }
         }
 
         private void HabilitarControlesZoologico() {
